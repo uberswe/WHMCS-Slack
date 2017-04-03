@@ -12,3 +12,4 @@ If you have purchased this script previously and need support please contact me 
 3. Go to "OAuth & Permissions" to obtain your "Bot User OAuth Access Token"
 4. In slack, invite your new bot to each channel under which it will be broadcasting info from WHMCS
 5. Activate this plugin in WHMCS and under its config enter the botname as whmcs and provide the Access Token
+6. In WHMCS go to Addons > WHMCS Slack and add and configure each hook that you wish to integrate with Slack.

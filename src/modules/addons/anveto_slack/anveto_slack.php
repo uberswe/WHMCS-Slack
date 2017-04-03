@@ -136,11 +136,13 @@ function anveto_slack_output($vars)
         echo '<div style="border:1px dashed #efefef;padding:15px;">';
         echo '<form method="post" action="" style="display:inline">';
         echo '<h2>'.$d->hook.'</h2>';
-        echo '<input type="hidden" name="updateHook" value="'.$d->id.'">';
-        echo '<b><input type="text" name="channel" value="'.$d->channel.'"></b><br/>';
-        echo '<b><textarea cols="50" rows="3" name="text">'.$d->text.'</textarea></b><br/>';
-        echo '<b>Available parameters: </b>'.implode(", ", $hooksArray[$d->hook]['args']).'<br/>';
         echo '<b>Description: </b>'.$hooksArray[$d->hook]['description'].'<br/>';
+        echo '<input type="hidden" name="updateHook" value="'.$d->id.'">';
+        echo '<small>CHANNEL:</small>&nbsp;';
+        echo '<b><input type="text" name="channel" value="'.$d->channel.'"></b><br/>';
+        echo '<small>MESSAGE:</small><br/>';
+        echo '<textarea cols="50" rows="3" name="text">'.$d->text.'</textarea><br/>';
+        echo '<b>Available parameters: </b>'.implode(", ", $hooksArray[$d->hook]['args']).'<br/>';
         echo '<button type="submit" class="button btn btn-sm btn-default"><i class="fa fa-refresh"></i> Update Hook</button>';
         echo '</form>';
 

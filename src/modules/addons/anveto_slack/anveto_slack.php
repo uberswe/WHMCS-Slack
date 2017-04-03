@@ -1,4 +1,7 @@
 <?php
+
+use WHMCS\Database\Capsule;
+
 /**
  * Copyright Anveto AB
  * Author: Markus Tenghamn
@@ -126,23 +129,21 @@ function anveto_slack_output($vars)
     echo '</select>';
     echo '<input type="submit" value="Add Hook">';
     echo '</form>';
-    $fields = "id,hook,channel,text";
-    $where = array();
-    $result = select_query($table,$fields, $where);
-    while ($d = mysql_fetch_array($result)) {
+    
+    foreach ( Capsule::table($table)->select('id','hook','channel','text')->get() as $d ) {
         echo '<div>';
         echo '<form method="post" action="">';
-        echo '<h3>'.$d['hook'].'</h3><br/>';
-        echo '<input type="hidden" name="updateHook" value="'.$d['id'].'">';
-        echo '<b><input type="text" name="channel" value="'.$d['channel'].'"></b><br/>';
-        echo '<b><textarea cols="50" rows="3" name="text">'.$d['text'].'</textarea></b><br/>';
-        echo '<b>Available parameters: </b>'.implode(", ", $hooksArray[$d['hook']]['args']).'<br/>';
-        echo '<b>Description: </b>'.$hooksArray[$d['hook']]['description'].'<br/>';
+        echo '<h3>'.$d->hook.'</h3><br/>';
+        echo '<input type="hidden" name="updateHook" value="'.$d->id.'">';
+        echo '<b><input type="text" name="channel" value="'.$d->channel.'"></b><br/>';
+        echo '<b><textarea cols="50" rows="3" name="text">'.$d->text.'</textarea></b><br/>';
+        echo '<b>Available parameters: </b>'.implode(", ", $hooksArray[$d->hook]['args']).'<br/>';
+        echo '<b>Description: </b>'.$hooksArray[$d->hook]['description'].'<br/>';
         echo '<input type="submit" value="Update Hook">';
         echo '</form>';
 
         echo '<form method="post" action="">';
-        echo '<input type="hidden" name="deleteHook" value="'.$d['id'].'">';
+        echo '<input type="hidden" name="deleteHook" value="'.$d->id.'">';
         echo '<input type="submit" value="Delete Hook">';
         echo '</form>';
         echo '<br/>';

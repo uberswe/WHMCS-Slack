@@ -122,30 +122,31 @@ function anveto_slack_output($vars)
         echo $k."<br/>";
     }
 */
-    echo '<form method="post" action="">';
+    echo '<form method="post" action="" style="background-color:#efefef;padding:15px">';
+    echo '<h2 style="float:left;margin-top:5px">Create New Hook:</h2>&nbsp;';
     echo '<select name="hook">';
     foreach ($hooksArray as $k=>$h) {
         echo '<option value="'.$k.'">'.$k.'</option>';
     }
-    echo '</select>';
-    echo '<input type="submit" value="Add Hook">';
+    echo '</select>&nbsp;';
+    echo '<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Add Hook</button>';
     echo '</form>';
     
     foreach ( Capsule::table($table)->select('id','hook','channel','text')->get() as $d ) {
-        echo '<div>';
-        echo '<form method="post" action="">';
-        echo '<h3>'.$d->hook.'</h3><br/>';
+        echo '<div style="border:1px dashed #efefef;padding:15px;">';
+        echo '<form method="post" action="" style="display:inline">';
+        echo '<h2>'.$d->hook.'</h2>';
         echo '<input type="hidden" name="updateHook" value="'.$d->id.'">';
         echo '<b><input type="text" name="channel" value="'.$d->channel.'"></b><br/>';
         echo '<b><textarea cols="50" rows="3" name="text">'.$d->text.'</textarea></b><br/>';
         echo '<b>Available parameters: </b>'.implode(", ", $hooksArray[$d->hook]['args']).'<br/>';
         echo '<b>Description: </b>'.$hooksArray[$d->hook]['description'].'<br/>';
-        echo '<input type="submit" value="Update Hook">';
+        echo '<button type="submit" class="button btn btn-sm btn-default"><i class="fa fa-refresh"></i> Update Hook</button>';
         echo '</form>';
 
-        echo '<form method="post" action="">';
+        echo '<form method="post" action="" style="display:inline">';
         echo '<input type="hidden" name="deleteHook" value="'.$d->id.'">';
-        echo '<input type="submit" value="Delete Hook">';
+        echo '<button type="submit" class="button btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete Hook</button>';
         echo '</form>';
         echo '<br/>';
         echo '</div>';

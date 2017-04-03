@@ -35,7 +35,7 @@ function anveto_slack_config()
     $configarray = array(
         "name" => anveto_slack_getmodulename(),
         "description" => "This plugin will post to slack when events happen in your WHMCS installation. Remember to configure the plugin.",
-        "version" => "1.0",
+        "version" => "2.0",
         "author" => "Anveto",
         "language" => "english",
         "fields" => array(
@@ -117,10 +117,11 @@ function anveto_slack_output($vars)
     $version = $vars['version'];
     $LANG = $vars['_lang'];
 
+/*
     foreach ($hooksArray as $k=>$h) {
         echo $k."<br/>";
     }
-
+*/
     echo '<form method="post" action="">';
     echo '<select name="hook">';
     foreach ($hooksArray as $k=>$h) {

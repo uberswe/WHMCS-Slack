@@ -112,7 +112,7 @@ $hooksArray = array(
         'default' => "Quote {quoteid} was set to {status}",
         'channel' => "#sales"
     ),
-    'acceptQuote' => array(
+    'AcceptQuote' => array(
         'description' => 'As the quote is being accepted via the client area.',
         'args' => array('quoteid', 'invoiceid'),
         'default' => "Quote {quoteid} was set to Accepted",

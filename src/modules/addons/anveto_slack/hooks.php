@@ -43,11 +43,12 @@ foreach ( Capsule::table('mod_anveto_slack_hooks')->select('id','hook','channel'
                 }
             }
             $slack = new Slack($bottoken);
-            $args = array('channel' => $d->channel, 'text' => $message, 'username' => $username, 'as_user' => 'true');
+            $args = array('channel' => $d->channel, 'text' => html_entity_decode($message), 'username' => $username, 'as_user' => 'true');
+            
             $result = $slack->call("chat.postMessage", $args);
 
-            if ($result->ok == false) {
-                $values["description"] = "Slack Error: " . $result->error;
+            if ($result['ok'] == false) {
+                $values["description"] = "Slack Error: " . $result['error'];
                 $results = localAPI("logactivity", $values);
             }
         }

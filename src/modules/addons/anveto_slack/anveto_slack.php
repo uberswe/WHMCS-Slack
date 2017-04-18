@@ -123,6 +123,7 @@ function anveto_slack_output($vars)
     }
 */
     echo '<form method="post" action="" style="background-color:#efefef;padding:15px">';
+    echo '<div id="formatting" style="float:right"><a href="https://api.slack.com/docs/message-formatting" target="_blank">Learn about Slack message formatting</a></div>';
     echo '<h2 style="float:left;margin-top:5px">Create New Hook:</h2>&nbsp;';
     echo '<select name="hook">';
     foreach ($hooksArray as $k=>$h) {
@@ -133,7 +134,7 @@ function anveto_slack_output($vars)
     echo '</form>';
     
     foreach ( Capsule::table($table)->select('id','hook','channel','text')->get() as $d ) {
-        echo '<div style="border:1px dashed #efefef;padding:15px;">';
+        echo '<div style="border:1px dashed #efefef;padding:15px 20px;">';
         echo '<form method="post" action="" style="display:inline">';
         echo '<h2>'.$d->hook.'</h2>';
         echo '<b>Description: </b>'.$hooksArray[$d->hook]['description'].'<br/>';
@@ -141,7 +142,7 @@ function anveto_slack_output($vars)
         echo '<small>CHANNEL:</small>&nbsp;';
         echo '<b><input type="text" name="channel" value="'.$d->channel.'"></b><br/>';
         echo '<small>MESSAGE:</small><br/>';
-        echo '<textarea cols="50" rows="3" name="text">'.$d->text.'</textarea><br/>';
+        echo '<textarea cols="50" rows="3" name="text" style="width:100%">'.$d->text.'</textarea><br/>';
         echo '<b>Available parameters: </b>'.implode(", ", $hooksArray[$d->hook]['args']).'<br/>';
         echo '<button type="submit" class="button btn btn-sm btn-default"><i class="fa fa-refresh"></i> Update Hook</button>';
         echo '</form>';

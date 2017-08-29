@@ -1,4 +1,7 @@
 <?php
+
+use WHMCS\Database\Capsule;
+
 /**
  * Copyright Anveto AB
  * Author: Markus Tenghamn
@@ -14,19 +17,15 @@ if (!defined("WHMCS")) {
 require_once dirname(__FILE__).'/db.php';
 
 global $hooksArray;
-
-$table = "mod_anveto_slack_hooks";
-$fields = "id,hook,channel,text";
-$where = array();
-$result = select_query($table,$fields, $where);
-while ($d = mysql_fetch_array($result)) {
-    add_hook($d['hook'],1000, function($vars) use ($d) {
+  
+foreach ( Capsule::table('mod_anveto_slack_hooks')->select('id','hook','channel','text')->get() as $d ) {
+    add_hook($d->hook,1000, function($vars) use ($d) {
         $message = "";
         if (isset($vars['params'])) {
             $vars = $vars['params'];
         }
-        if (isset($d['text'])) {
-            $message = $d['text'];
+        if (isset($d->text)) {
+            $message = $d->text;
             foreach ($vars as $key=>$val) {
                 if (strpos($message, '{'.$key.'}') !== false) {
                     $message = str_replace('{'.$key.'}', $val, $message);
@@ -36,24 +35,21 @@ while ($d = mysql_fetch_array($result)) {
         if ($message != "") {
             $bottoken = "";
             $username = "";
-            $table = "tbladdonmodules";
-            $fields = "setting, value";
-            $where = array('module' => 'anveto_slack');
-            $result = select_query($table,$fields, $where);
-            while ($r = mysql_fetch_array($result)) {
-                if ($r['setting'] == "token") {
-                    $bottoken = $r['value'];
-                } else if ($r['setting'] == "botname") {
-                    $username = $r['value'];
+            foreach (Capsule::table('tbladdonmodules')->select('setting', 'value')->where('module', 'anveto_slack')->get() as $r){
+                if ($r->setting == "token") {
+                    $bottoken = $r->value;
+                } else if ($r->setting == "botname") {
+                    $username = $r->value;
                 }
             }
             $slack = new Slack($bottoken);
-            $args = array('channel' => $d['channel'], 'text' => $message, 'username' => $username, 'as_user' => 'true');
-            $channels = $slack->call("chat.postMessage", $args);
-            $command = "logactivity";
-            if (count($channels) > 0) {
-                $values["description"] = "Anveto Slack: " . implode(",", $channels);
-                $results = localAPI($command, $values);
+            $args = array('channel' => $d->channel, 'text' => html_entity_decode($message, ENT_QUOTES), 'username' => $username, 'as_user' => 'true');
+            
+            $result = $slack->call("chat.postMessage", $args);
+
+            if ($result['ok'] == false) {
+                $values["description"] = "Slack Error: " . $result['error'];
+                $results = localAPI("logactivity", $values);
             }
         }
     });

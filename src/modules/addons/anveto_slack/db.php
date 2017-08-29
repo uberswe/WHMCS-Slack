@@ -112,7 +112,7 @@ $hooksArray = array(
         'default' => "Quote {quoteid} was set to {status}",
         'channel' => "#sales"
     ),
-    'acceptQuote' => array(
+    'AcceptQuote' => array(
         'description' => 'As the quote is being accepted via the client area.',
         'args' => array('quoteid', 'invoiceid'),
         'default' => "Quote {quoteid} was set to Accepted",
@@ -133,7 +133,7 @@ $hooksArray = array(
     ),
     'AfterShoppingCartCheckout' => array(
         'description' => 'After the checkout button is pressed, once the order has been added to the database.',
-        'args' => array('orderid', 'order_number', 'orderproductids', 'orderdomainids', 'orderaddonids', 'orderrenewalids', 'paymentmethod', 'invoiceid', 'cart_total'),
+        'args' => array('OrderID', 'OrderNumber', 'ServiceIDs', 'AddonIDs', 'DomainIDs', 'RenewalIDs', 'PaymentMethod', 'InvoiceID', 'TotalDue'),
         'default' => "Checkout finished for order {orderid}",
         'channel' => "#sales"
     ),

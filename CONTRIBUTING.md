@@ -16,4 +16,4 @@ are none, simply open a new issue with a detailed description of the idea you ha
 best to review the pull request within a few days. Please add a clear description of what
 the code should do or fix.
 
-All code contributed falls under the MIT license. If you have any questions feel free to contact me.
+All code contributed falls under the MIT license as described in the LICENSE file of this project. If you have any questions feel free to contact me.

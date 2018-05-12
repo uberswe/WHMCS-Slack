@@ -1,11 +1,17 @@
 <?php
 
 /**
- * Copyright Anveto AB
- * Author: Markus Tenghamn
- * Date: 24/03/15
- * Time: 16:47
- * This is not to be removed.
+ *
+ * WHMCS Slack
+ *
+ * A WHMCS addon for sending messages to Slack based on WHMCS hooks.
+ *
+ * @author     Markus Tenghamn <m@rkus.io>
+ * @copyright  Copyright (c) Markus Tenghamn 2018
+ * @license    MIT License (https://github.com/markustenghamn/WHMCS-Slack/blob/master/LICENSE)
+ * @version    $Id$
+ * @link       https://github.com/markustenghamn/WHMCS-Slack
+ *
  */
 
 if (!defined("WHMCS")) {
